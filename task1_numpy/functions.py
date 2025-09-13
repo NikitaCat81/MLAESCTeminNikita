@@ -20,24 +20,24 @@ def are_multisets_equal(ms_1, ms_2):
 def max_after_zero(ms):
     a = list()
     for i in range(1, len(ms)):
-        if((ms[i - 1] == 0).any):
+        if((ms[i - 1] == 0)):
             a.append(ms[i])
     return max(a)
 
 
 def convert_image(img, coefs):
-    """Sum up image channels with weights from coefs array
-
-    input:
-    img -- 3-d numpy array (H x W x 3)
-    coefs -- 1-d numpy array (length 3)
-    output:
-    img -- 2-d numpy array
-
-    Not vectorized implementation.
-    """
-
-    pass
+    height = len(img)
+    width = len(img[0])
+    result_img = list()
+    for i in range(height):
+        curr_str = list()
+        for j in range(width):
+            sum = 0
+            for k in range(len(coefs)):
+                sum += img[i][j][k] * coefs[k]
+            curr_str.append(sum)
+        result_img.append(curr_str)
+    return result_img
 
 
 def run_length_encoding(ms):

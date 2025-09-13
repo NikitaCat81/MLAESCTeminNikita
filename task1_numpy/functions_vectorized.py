@@ -2,30 +2,27 @@ import numpy as np
 
 
 def prod_non_zero_diag(ms):
-    a = ms.diagonal(0)
-    a = np.where(a != 0, a, 1)
-    return np.prod(a)
+    a = np.diag(ms)
+    return a[a != 0].prod()
+    pass
 
 
 def are_multisets_equal(ms_1, ms_2):
     ms_1_n, ms_1_c = np.unique(ms_1, return_counts=True)
     ms_2_n, ms_2_c = np.unique(ms_2, return_counts=True)
-    if(np.shape(ms_1_n) != np.shape(ms_2_n)):
-        return False
-    if(np.any(ms_1_n != ms_2_n) or np.any(ms_1_c !=ms_2_c)):
-        return False
-    return True
+    arr = [True]
+    new_arr = np.where((np.shape(ms_1_n) != np.shape(ms_2_n) or np.any(ms_1_n != ms_2_n) or np.any(ms_1_c !=ms_2_c)), False, arr)
+    return new_arr[0]
 
 
 def max_after_zero(ms):
-    a = np.ones((1))
-    a = np.hstack((a, ms))
-    i = a == 0
-    return np.max(ms)
+    num = np.where(ms[:len(ms) - 1] == 0)
+    num = np.array(num) + 1
+    return np.max(ms[(num.tolist())])
 
 
-def convert_image(img, coeff):
-    return np.sum(img * coeff, axis=-1)
+def convert_image(img, coefs):
+    return np.sum(img * coefs, axis=-1)
 
 
 def run_length_encoding(ms):
